@@ -1,0 +1,322 @@
+Lucy OS — Drag & Drop System Specification
+Advanced ingestion pipeline for files, media, text, and objects inside a virtual desktop
+
+1. Core Concept
+Lucy does not run on the real Windows desktop.
+She runs inside her own virtual desktop sandbox (Electron + Chromium surface).
+
+Therefore:
+
+Windows cannot drop files directly into Lucy.
+Electron must intercept the drop event, and Lucy must decide what to do with the file.
+
+This is the foundation of the entire system.
+
+2. High-Level Flow
+Code
+User drops file → Electron captures → IPC → Lucy Frontend → Lucy OS Ingestion Engine → Library / Tools / Agents
+Broken down:
+
+User drags file over Lucy’s window
+
+Electron receives OS-level drag event
+
+Electron sends file metadata → Renderer via IPC
+
+Lucy UI shows drop targets / animations
+
+User releases file
+
+Lucy OS Ingestion Engine classifies file
+
+Lucy decides action (auto or Ask Lucy modal)
+
+Lucy imports file into internal library
+
+Lucy triggers agents (Audio, Vision, Document, etc.)
+
+3. Drag Zones (Virtual Desktop Regions)
+Lucy’s desktop has four drop zones, each with different behaviors:
+
+1. Desktop Surface
+Default drop zone
+
+Triggers Ask Lucy modal
+
+Used for:
+
+Images
+
+Audio
+
+Video
+
+Documents
+
+Code files
+
+Archives
+
+2. App Icons / Dock
+Dropping onto an app icon triggers contextual ingestion:
+
+Drop image → Photo app opens with import
+
+Drop audio → Music app imports to library
+
+Drop code → CodeSmith opens with file loaded
+
+Drop folder → File Explorer opens inside Lucy
+
+3. Window Drop Targets
+If a window is open:
+
+Drop text → paste or analyze
+
+Drop image → set wallpaper / analyze / open
+
+Drop audio → play / add to queue
+
+Drop video → play / transcode
+
+Drop document → summarize / index
+
+4. System Tray / Tools Panel
+Dropping here triggers toolbelt actions:
+
+Drop image → “Convert to PNG / Resize / Analyze”
+
+Drop audio → “Transcribe / Normalize / Add to Library”
+
+Drop text → “Summarize / Translate / Store in Memory”
+
+4. UI Behavior & Visual Feedback
+Hover State
+When dragging over Lucy:
+
+Desktop dims slightly
+
+Drop zones glow
+
+Icons animate (bounce or pulse)
+
+Windows show “drop allowed” borders
+
+Drop Preview
+Lucy shows a floating preview card:
+
+File icon
+
+File name
+
+File type
+
+Size
+
+Suggested action (AI-generated)
+
+Drop Complete Animation
+File “falls” into the chosen zone
+
+Particle effect or ripple
+
+Toast notification:
+“Imported to Lucy Library”  
+or
+“Analyzing image…”
+
+5. Ingestion Engine (The Brain Behind Drag & Drop)
+When a file is dropped, Lucy runs:
+
+Code
+classify(file)
+↓
+route(file)
+↓
+ingest(file)
+↓
+trigger_agents(file)
+5.1 Classification
+Lucy identifies:
+
+File type
+
+MIME type
+
+Content type (AI vision/audio/text)
+
+Safety level
+
+Suggested actions
+
+5.2 Routing
+Lucy decides where the file should go:
+
+Music Library
+
+Image Library
+
+Document Library
+
+Project Workspace
+
+Temporary Scratchpad
+
+Agent-specific pipelines
+
+5.3 Ingestion
+Lucy copies the file into her internal structure:
+
+Code
+/LucyOS/
+   /Library/
+      /Images/
+      /Audio/
+      /Video/
+      /Documents/
+      /Code/
+5.4 Agent Triggers
+Depending on file type:
+
+Vision Agent → images
+
+Audio Agent → music, voice
+
+Document Agent → PDFs, docs
+
+Code Agent → scripts, source files
+
+Memory Agent → notes, text
+
+DevOps Agent → configs, docker files
+
+6. Ask Lucy Modal (Smart Drop Dialog)
+When Lucy needs clarification, she opens:
+
+Ask Lucy: What should I do with this file?
+Modal Layout
+File preview (thumbnail or icon)
+
+File metadata
+
+AI-generated suggestions
+
+Manual actions
+
+Examples
+Image
+Set as wallpaper
+
+Analyze image
+
+Add to gallery
+
+Extract text
+
+Generate variants
+
+Audio
+Add to music library
+
+Play now
+
+Transcribe
+
+Analyze BPM / key
+
+Add to playlist
+
+Document
+Summarize
+
+Extract text
+
+Convert to PDF
+
+Add to knowledge memory
+
+Open in editor
+
+Code
+Run in WASM sandbox
+
+Analyze code
+
+Generate documentation
+
+Fix errors
+
+Add to project
+
+7. Electron → Lucy IPC Pipeline
+Electron Main
+Captures OS drop event:
+
+js
+mainWindow.webContents.send("file-dropped", filePaths)
+Renderer
+Receives event:
+
+js
+ipcRenderer.on("file-dropped", (event, files) => {
+    lucy.handleDrop(files)
+})
+Lucy OS
+Runs ingestion engine:
+
+ts
+handleDrop(files) {
+    const classified = classify(files)
+    const actions = suggestActions(classified)
+    showAskLucyModal(classified, actions)
+}
+8. Multi-File & Folder Support
+Lucy supports:
+
+Multiple files dropped at once
+
+Entire folders
+
+Mixed file types
+
+Batch Behavior
+Lucy groups files by type:
+
+Code
+3 images → Gallery import
+2 audio → Music library
+1 PDF → Document agent
+9. Advanced Features
+9.1 Dragging Out of Lucy
+Lucy allows:
+
+Dragging files from her library back to Windows
+
+Dragging generated content (images, audio, code)
+
+9.2 Dragging Between Windows
+Lucy supports:
+
+Dragging images into chat
+
+Dragging audio into AI DJ
+
+Dragging documents into CodeSmith
+
+Dragging tasks into Planner
+
+9.3 Dragging AI Objects
+Lucy treats AI-generated objects as draggable:
+
+Generated images
+
+Generated code files
+
+Summaries
+
+Notes
+
+Tasks
+
+10. Summary (One Sentence)
+Lucy’s drag‑and‑drop system is a virtual-desktop ingestion pipeline where Electron captures the drop, Lucy classifies the file, chooses an action, imports it into her internal library, and triggers the correct agents to process it.

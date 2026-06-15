@@ -1,0 +1,778 @@
+LUCY OS — Functional System Map (Dashboard‑Ready)
+Complete operational mapping of all subsystems, agents, flows, and battalions
+
+1. Top‑Level Cognitive Loop
+This is the heartbeat of Lucy.
+It runs every few seconds and drives the entire OS.
+
+Code
+Events  
+   ↓  
+Task Intake  
+   ↓  
+Task Planner  
+   ↓  
+Task Decomposer  
+   ↓  
+Swarm Assignment  
+   ↓  
+Execution  
+   ↓  
+Feedback  
+   ↓  
+Memory  
+   ↓  
+Replanning
+Dashboard Panels
+Event Stream (live feed)
+
+Task Intake Queue
+
+Planner Output
+
+Decomposition Tree
+
+Active Agents
+
+Execution Logs
+
+Feedback & Evaluation
+
+Memory Writes
+
+Replanning Triggers
+
+2. Event System (W.A.T.C.H Battalion)
+W.A.T.C.H = Windows Awareness & Task Coordination Hub
+
+Responsibilities
+Monitor OS
+
+Monitor Apps
+
+Monitor Browser
+
+Monitor Network
+
+Monitor User Activity
+
+Monitor Lucy Agents
+
+Detect new tasks
+
+Publish events
+
+Event Flow
+Code
+OS / App / System Change  
+        ↓  
+W.A.T.C.H detects  
+        ↓  
+Event Bus publishes  
+        ↓  
+Task Intake consumes  
+Dashboard Panels
+System Events Timeline
+
+Event Priority Scores
+
+Event Sources
+
+Suggested Actions
+
+Event → Task Conversion Log
+
+Example Event Object
+Code
+{
+  "event": "docker.container.started",
+  "source": "docker",
+  "priority": 3,
+  "timestamp": "...",
+  "suggested_action": "inspect_container"
+}
+3. Task Intake Layer
+This layer converts events + user requests into actionable tasks.
+
+Flow
+Code
+Incoming Events  
+User Commands  
+Scheduled Tasks  
+        ↓  
+Task Identification  
+        ↓  
+Task Normalization  
+        ↓  
+Task Queue
+Dashboard Panels
+Incoming Tasks
+
+Task Classification
+
+Task Priority
+
+Task Source (User / System / Event)
+
+4. Task Planner
+The planner decides what needs to happen.
+
+Flow
+Code
+Task  
+  ↓  
+Goal Understanding  
+  ↓  
+Plan Draft  
+  ↓  
+Plan Validation  
+  ↓  
+Plan Output
+Dashboard Panels
+Plan Preview
+
+Goal Interpretation
+
+Plan Confidence Score
+
+Plan Revision History
+
+5. Task Decomposition Engine
+This is where Lucy breaks tasks into atomic subtasks.
+
+Example
+Build FiveM Police System →
+
+Code
+TASK-001
+├─ Design Architecture
+├─ Define Database
+├─ Create Arrest Logic
+├─ Create Evidence Logic
+├─ Create Vehicle Logic
+├─ Create Dispatch Logic
+├─ Write Tests
+└─ Generate Documentation
+Dashboard Panels
+Decomposition Tree View
+
+Subtask Status
+
+Subtask → Agent Mapping
+
+Dependencies Graph
+
+6. Swarm Assignment Layer
+Lucy assigns subtasks to the correct battalion/agent.
+
+Battalions
+Architect
+
+Research
+
+Security
+
+Programmer
+
+QA
+
+Documentation
+
+DevOps
+
+Memory
+
+W.A.T.C.H
+
+Flow
+Code
+Subtask  
+   ↓  
+Agent Selection  
+   ↓  
+Assignment  
+   ↓  
+Execution Pipeline
+Dashboard Panels
+Active Agents
+
+Agent Load
+
+Agent Health
+
+Agent Output
+
+Agent Conflicts / Errors
+
+7. Blackboard System
+The shared memory layer where all agents read/write.
+
+Blackboard Structure
+Code
+{
+  "active_tasks": [],
+  "completed_tasks": [],
+  "current_goal": "",
+  "alerts": [],
+  "events": []
+}
+Dashboard Panels
+Blackboard Live View
+
+Writes per Agent
+
+Reads per Agent
+
+Alerts Feed
+
+Goal State
+
+Flow
+Code
+Agent → Blackboard → Other Agents
+No direct agent‑to‑agent communication.
+
+8. Execution Layer (Wedgit API + WASM Sandbox)
+This is where real work happens.
+
+Wedgit Execution Flow
+Code
+Subtask  
+   ↓  
+WASM Module Generated  
+   ↓  
+POST /orchestrator/execute_wasm  
+   ↓  
+SafeGuard Check  
+   ↓  
+Execution  
+   ↓  
+stdout / stderr  
+   ↓  
+Audit Log  
+   ↓  
+Blackboard Write
+Wedgit Visual States
+pending – waiting for SafeGuard
+
+denied – blocked
+
+allowed – executing
+
+executed – finished
+
+Dashboard Panels
+Execution Queue
+
+SafeGuard Decisions
+
+WASM Execution Logs
+
+stdout / stderr Viewer
+
+Audit Trail
+
+9. Feedback & Evaluation Layer
+After execution, Lucy evaluates results.
+
+Flow
+Code
+Execution Result  
+   ↓  
+Success / Failure  
+   ↓  
+Quality Score  
+   ↓  
+Memory Update  
+   ↓  
+Replanning (if needed)
+Dashboard Panels
+Task Success Rate
+
+Error Patterns
+
+Quality Metrics
+
+Replanning Triggers
+
+10. Memory Layer
+Long‑term learning.
+
+Memory Types
+Task Memory
+
+Event Memory
+
+User Preference Memory
+
+System State Memory
+
+Agent Performance Memory
+
+Dashboard Panels
+Memory Graph
+
+Recent Writes
+
+Memory Clusters
+
+Recall Accuracy
+
+11. Replanning Layer
+If something fails or changes, Lucy replans automatically.
+
+Flow
+Code
+Failure / New Event  
+   ↓  
+Re-evaluate Goal  
+   ↓  
+Replan  
+   ↓  
+Reassign  
+   ↓  
+Execute Again
+Dashboard Panels
+Replanning Events
+
+Plan Diff Viewer
+
+Reassignment Logs
+
+12. Full System Map (One‑Page Overview)
+Code
+W.A.T.C.H → Event Bus → Task Intake → Planner → Decomposer → Swarm Assignment → Wedgit Execution → Feedback → Memory → Replanning → (loop)
+This is the exact functional map your dashboard should visualize.
+
+
+
+Lucy OS Swarm Dashboard — Full UI Layout (Markdown Spec)
+1. Top-level screen structure
+Screen name: Swarm Operations Dashboard  
+Primary goal: Real‑time command center for Lucy’s cognitive loop, events, agents, and executions.
+
+Layout grid (desktop, 16:9, touch‑friendly):
+
+Top bar (64px–80px height)
+
+Main body split:
+
+Left column (25–30% width) — Awareness & Events
+
+Center column (40–50% width) — Tasks, Plans, Decomposition
+
+Right column (25–30% width) — Agents, Execution, Memory
+
+Bottom strip (48–64px height) — Status rail & quick actions
+
+2. Top bar — Global control & context
+Region: Full width, fixed at top.
+
+Contents:
+
+Left section
+
+Logo / Title: Lucy OS · Swarm Dashboard
+
+Mode indicator: LIVE / PAUSED (toggle)
+
+Workspace selector: Global · Project · System · User
+
+Center section
+
+Cognitive loop status pill:
+
+Text: Loop: Running (every 5s)
+
+Subtext: Last cycle: 1.2s · Next in: 3.8s
+
+Loop phase indicator (stepper):  
+Events → Intake → Planner → Decomposer → Swarm → Execution → Feedback → Memory → Replan
+
+Current phase highlighted, others dimmed.
+
+Right section
+
+Global search: Search tasks, events, agents…
+
+Profile / persona: Emma (Sovereign Coordinator)
+
+System icons: notifications, settings, theme toggle.
+
+3. Left column — Awareness & events (W.A.T.C.H)
+3.1 Panel: Real-time awareness overview
+Title: W.A.T.C.H · Awareness  
+Position: Top of left column.
+
+Contents:
+
+Mini tiles (2×3 grid):
+
+OS: CPU, memory, disk (small sparkline)
+
+Apps: active windows count, foreground app
+
+Network: up/down, latency
+
+Browser: active tabs, tracked domains
+
+Agents: active vs idle
+
+Alerts: count by severity
+
+Each tile is tap/clickable → opens detailed view.
+
+3.2 Panel: Event stream
+Title: Event Bus · Live Stream  
+Position: Below awareness panel, scrollable.
+
+Layout:
+
+Filter bar (top):
+
+Source chips: OS, Apps, Network, Docker, Git, Email, Discord, Calendar, Lucy
+
+Severity filter: All · Info · Warn · Critical
+
+Toggle: Only actionable events
+
+Event list (timeline):
+
+Each row:
+
+Timestamp
+
+Icon + source (e.g., Docker, Filesystem)
+
+Event name (e.g., docker.container.started)
+
+Priority badge (1–5)
+
+Suggested action (small pill, e.g., index_document)
+
+Status: queued → converted_to_task → ignored
+
+Tap/click event → side drawer with full JSON payload and history.
+
+4. Center column — Tasks, planning, decomposition
+4.1 Panel: Task intake & queue
+Title: Task Intake  
+Position: Top of center column.
+
+Layout:
+
+Tabs: All · From Events · From User · Scheduled
+
+Columns:
+
+Source icon
+
+Task ID
+
+Short description
+
+Priority
+
+Status: new · normalized · sent_to_planner
+
+Origin: event_id or user
+
+Row click → opens task detail below.
+
+4.2 Panel: Task detail & planner view
+Title: Task · Planner  
+Position: Middle of center column (expands when a task is selected).
+
+Layout:
+
+Header:
+
+Task ID + title (e.g., TASK-001 · Build FiveM Police System)
+
+Status chip: planning · decomposing · executing · completed
+
+Priority + source
+
+Two-column content:
+
+Left side: Goal & plan
+
+Goal interpretation box:
+
+Goal: natural language
+
+Context: key signals (user focus, recent events)
+
+Plan steps list:
+
+Ordered list of high‑level steps
+
+Each step has:
+
+Status: pending · in_progress · done
+
+Confidence score
+
+Linked subtasks count
+
+Right side: Planner metadata
+
+Planner model used
+
+Plan confidence
+
+Last updated time
+
+Buttons:
+
+Force Replan
+
+Lock Plan
+
+Simulate Outcome
+
+4.3 Panel: Decomposition tree
+Title: Task Decomposition  
+Position: Bottom of center column.
+
+Layout:
+
+Tree view (left):
+
+Root: TASK-001
+
+Children:
+
+Design Architecture
+
+Define Database
+
+Create Arrest Logic
+
+Create Evidence Logic
+
+Create Vehicle Logic
+
+Create Dispatch Logic
+
+Write Tests
+
+Generate Documentation
+
+Details pane (right):
+
+When a subtask is selected:
+
+Subtask ID
+
+Description
+
+Assigned agent/battalion
+
+Dependencies
+
+Status
+
+Links: View execution, View blackboard entries
+
+Controls:
+
+Expand all / Collapse all
+
+Show dependencies graph
+
+Manual add subtask
+
+5. Right column — Agents, execution, memory
+5.1 Panel: Swarm & agents
+Title: Swarm Assignment  
+Position: Top of right column.
+
+Layout:
+
+Battalion cards (horizontal scroll):
+
+Architect · Research · Security · Programmer · QA · Documentation · DevOps · Memory · W.A.T.C.H
+
+Each card shows:
+
+Active tasks count
+
+Queue length
+
+Health indicator (OK / degraded / error)
+
+Agent table (below cards):
+
+Columns:
+
+Agent name
+
+Battalion
+
+Current subtask
+
+Runtime state: idle · working · blocked · error
+
+Last heartbeat
+
+Click agent → opens agent detail drawer (logs, blackboard interactions).
+
+5.2 Panel: Execution pipeline (Wedgit)
+Title: Execution · Wedgit WASM  
+Position: Middle of right column.
+
+Layout:
+
+Tabs: Queue · Running · History
+
+Row fields:
+
+Request ID
+
+Task/Subtask
+
+Agent ID
+
+State: pending · denied · allowed · executed
+
+Exit code
+
+Duration
+
+Row click → Execution detail view:
+
+Request JSON (request_log)
+
+stdout (scrollable)
+
+stderr (scrollable, highlighted)
+
+SafeGuard decision + audit
+
+Buttons:
+
+Re-run
+
+Open in code viewer
+
+Export logs
+
+5.3 Panel: Blackboard & memory
+Title: Blackboard & Memory  
+Position: Bottom of right column.
+
+Layout:
+
+Tabs: Blackboard · Long-term Memory
+
+Blackboard tab:
+
+Key/value list:
+
+current_goal
+
+active_tasks (count + link)
+
+completed_tasks (count + link)
+
+alerts (list)
+
+events (recent)
+
+Activity feed:
+
+Agent X wrote key Y
+
+Agent Z read key Y
+
+Memory tab:
+
+Filters: Tasks · Events · Preferences · System · Agents
+
+List of recent memory entries:
+
+Timestamp
+
+Type
+
+Summary
+
+Linked task/agent
+
+Click entry → full content + “used by” references.
+
+6. Bottom strip — Status rail & quick actions
+Region: Full width, fixed at bottom.
+
+Contents:
+
+Left side:
+
+Loop status: Loop OK · Last cycle 1.2s · Errors: 0
+
+System health: small icons for CPU, memory, disk, network.
+
+Center:
+
+Attention meter:
+
+Visual bar showing current importance score:
+
+importance = urgency + relevance + user_focus + system_health
+
+Threshold marker: when crossed → swarm wakes.
+
+Right side:
+
+Quick actions:
+
+Pause loop
+
+Trigger full cycle
+
+Open logs
+
+Toggle simulation mode
+
+7. Mobile / touch behavior & gestures
+Even though this is a “desktop” dashboard, it should behave like a mobile‑grade UI.
+
+7.1 Global gestures
+Swipe from left edge: Open navigation drawer (switch dashboards: Swarm, DevOps, Logs, Settings).
+
+Swipe from right edge: Open notifications & alerts panel.
+
+Pinch out on center column: Expand current task to full‑screen “focus mode”.
+
+Three‑finger swipe left/right: Switch between:
+
+Overview · Tasks · Agents · Execution
+
+7.2 Panel interactions
+Panels are dockable cards:
+
+Long‑press title bar → drag to rearrange columns.
+
+Double‑tap title → maximize panel in place.
+
+Swipe down on panel → minimize to chip in bottom strip.
+
+8. Suggested dashboard routes (for implementation)
+You can map this layout into routes/views like:
+
+/dashboard/overview
+
+Shows full 3‑column layout as described.
+
+/dashboard/task/:id
+
+Focused view: center column full‑screen (task + planner + decomposition).
+
+/dashboard/agent/:id
+
+Right column full‑screen (agent + execution + blackboard interactions).
+
+/dashboard/events
+
+Left column full‑screen (W.A.T.C.H + event stream + filters).
